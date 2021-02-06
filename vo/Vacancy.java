@@ -1,7 +1,18 @@
 package com.javarush.task.task28.task2810.vo;
 
+import java.util.Objects;
+
 public class Vacancy {
     private String title, salary, city, companyName, siteName, url;
+
+    public Vacancy(String title, String salary, String city, String companyName, String siteName, String url) {
+        this.title = title;
+        this.salary = salary;
+        this.city = city;
+        this.companyName = companyName;
+        this.siteName = siteName;
+        this.url = url;
+    }
 
     public String getTitle() {
         return title;
@@ -49,5 +60,23 @@ public class Vacancy {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vacancy)) return false;
+        Vacancy vacancy = (Vacancy) o;
+        return Objects.equals(title, vacancy.title) &&
+                Objects.equals(salary, vacancy.salary) &&
+                Objects.equals(city, vacancy.city) &&
+                Objects.equals(companyName, vacancy.companyName) &&
+                Objects.equals(siteName, vacancy.siteName) &&
+                Objects.equals(url, vacancy.url);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, salary, city, companyName, siteName, url);
     }
 }
