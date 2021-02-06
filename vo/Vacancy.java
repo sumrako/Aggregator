@@ -5,15 +5,6 @@ import java.util.Objects;
 public class Vacancy {
     private String title, salary, city, companyName, siteName, url;
 
-    public Vacancy(String title, String salary, String city, String companyName, String siteName, String url) {
-        this.title = title;
-        this.salary = salary;
-        this.city = city;
-        this.companyName = companyName;
-        this.siteName = siteName;
-        this.url = url;
-    }
-
     public String getTitle() {
         return title;
     }
