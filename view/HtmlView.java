@@ -64,7 +64,7 @@ public class HtmlView implements View {
                 title.appendText(vacancy.getTitle());
                 title.attr("href", vacancy.getUrl());
 
-                template.before(copyTemplate.outerHtml());
+                elements.get(0).before(copyTemplate.outerHtml());
             }
 
             return document.html();
