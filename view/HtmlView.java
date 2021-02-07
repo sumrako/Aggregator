@@ -42,10 +42,7 @@ public class HtmlView implements View {
             template.removeAttr("style");
             template.removeClass("template");
 
-            document.getElementsByTag("tr").removeIf(element -> {
-                String className = element.className();
-                return className.equals("vacancy");
-            });
+            document.select("tr[class=vacancy]").remove();
 
 
             for (Vacancy vacancy : vacancies) {
