@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class HabrCareerStrategy implements Strategy {
     private final static String URL_FORMAT = "https://career.habr.com/vacancies?page=%d&q=java+%s&type=all";
@@ -34,10 +35,11 @@ public class HabrCareerStrategy implements Strategy {
                         vacancy.setUrl(titles.get(0).attr("href"));
 
                         Elements companyNames = element.getElementsByClass("vacancy-card__company");
-                        vacancy.setCompanyName(companyNames.get(0).text());
+                        vacancy.setCompanyName(companyNames.first().text());
 
-                        Elements cities = element.getElementsByClass("link-comp link-comp--appearance-dark");
-                        vacancy.setCity(cities.get(0).text());
+                        Pattern pattern = Pattern.compile("(/vacancies\\?city_id=\\d{1,3})");
+                        Elements cities = element.getElementsByAttributeValueMatching("href", pattern);
+                        vacancy.setCity(cities.size() == 0 ? "" : cities.get(0).text());
 
                         Elements salaries = element.getElementsByClass("vacancy-card__salary");
                         vacancy.setSalary(salaries.size() == 0 ? "" : salaries.get(0).text());
@@ -57,7 +59,7 @@ public class HabrCareerStrategy implements Strategy {
     }
 
     protected Document getDocument(String searchString, int page) throws IOException {
-        return Jsoup.connect(String.format(URL_FORMAT, searchString, page))
+        return Jsoup.connect(String.format(URL_FORMAT, page, searchString))
                 .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0")
                 .referrer("https://career.habr.com/")
                 .get();
