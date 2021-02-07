@@ -52,8 +52,6 @@ public class HHStrategy implements Strategy {
                     break;
                 }
             }
-        } catch (HttpStatusException e) {
-            return vacancies;
         } catch (IOException e) {
             return vacancies;
         }
